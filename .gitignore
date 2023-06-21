@@ -1,0 +1,7 @@
+node_modules
+package-lock.json
+bash_scripts/temp/*
+!bash_scripts/temp/temp.txt
+!bash_scripts/temp/mysql
+!bash_scripts/temp/php
+!bash_scripts/temp/nginx

@@ -1,0 +1,20 @@
+{
+  "name": "groundlink-control-tower",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://210.175.73.232/guillermo/groundlink-control-tower.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "mysql": "^2.18.1",
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}

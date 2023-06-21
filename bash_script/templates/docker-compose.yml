@@ -1,0 +1,66 @@
+version: '2.3'
+
+services:
+  mysql:
+    restart: always
+    image: mariadb:10.3
+    container_name: groundlink-mysql
+    ports:
+      - "3307:3306"
+    volumes:
+      - /docker/mysql:/var/lib/mysql
+      - ./config/my.cnf:/etc/mysql/my.cnf
+      - ../dumps:/dumps
+    networks:
+      - mysqlnetwork
+    environment:
+      - MYSQL_ROOT_PASSWORD=vG7n4AP9NSCmXNLg
+      - MYSQL_DATABASE=local
+      - MYSQL_USER=developer
+      - MYSQL_PASSWORD=4jyKJfXg2Cwn8ZfR
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=phpmyadmin
+      - PMA_PASSWORD=fRPY5Gq4XkMnnvv9
+
+  mysql-admin:
+    restart: always
+    image: phpmyadmin/phpmyadmin
+    container_name: groundlink-phpmyadmin
+    ports:
+      - "1000:80"
+    mem_limit: 512m
+    networks:
+      - mysqlnetwork
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: vG7n4AP9NSCmXNLg
+
+  redis-server:
+    restart: always
+    image: redis:4.0
+    container_name: groundlink-redis
+    command: /bin/bash -c 'redis-server --appendonly yes'
+    sysctls:
+      - net.core.somaxconn=65535
+    ports:
+      - "6380:6379"
+    volumes:
+      - /docker/redis:/data
+    mem_limit: 96m
+    networks:
+      - mysqlnetwork
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  mysqlnetwork:
+    driver: bridge
